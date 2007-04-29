@@ -2,8 +2,8 @@
 
 Summary:	Apache::Geo::IP - Look up country by IP Address
 Name:		perl-%{real_name}
-Version:	1.62
-Release:	%mkrel 4
+Version:	1.63
+Release:	%mkrel 1
 License:	GPL or Artistic
 Group:		Development/Perl
 URL:		http://search.cpan.org/dist/%{real_name}
