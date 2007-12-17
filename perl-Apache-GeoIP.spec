@@ -15,7 +15,6 @@ BuildRequires:	apache-mod_perl-devel
 BuildRequires:	perl(Apache::Test) >= 1.25
 #Requires:	apache-mod_perl
 #Requires(pre,postun): rpm-helper
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
 This module constitutes a mod_perl (both versions 1 and 2) interface 
