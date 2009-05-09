@@ -1,21 +1,20 @@
-%define real_name Apache-GeoIP
+%define module Apache-GeoIP
 
 Summary:	Apache::Geo::IP - Look up country by IP Address
-Name:		perl-%{real_name}
-Version:	1.63
-Release:	%mkrel 4
+Name:		perl-%{module}
+Version:	1.99
+Release:	%mkrel 1
 License:	GPL or Artistic
 Group:		Development/Perl
-URL:		http://search.cpan.org/dist/%{real_name}
-Source0:	ftp://ftp.perl.org/pub/CPAN/modules/by-module/Apache/%{real_name}-%{version}.tar.bz2
+URL:		http://search.cpan.org/dist/%{module}
+Source:     http://www.cpan.org/modules/by-module/Apache/%{module}-%{version}.tar.gz
 BuildRequires:	perl-devel
 BuildRequires:	apache-devel
 BuildRequires:	apache-mod_perl
 BuildRequires:	apache-mod_perl-devel
 BuildRequires:	perl(Apache::Test) >= 1.25
-#Requires:	apache-mod_perl
-#Requires(pre,postun): rpm-helper
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
+BuildRoot:	noarch
+BuildRoot:	%{_tmppath}/%{name}-%{version}
 
 %description
 This module constitutes a mod_perl (both versions 1 and 2) interface 
@@ -35,59 +34,19 @@ will only work with mod_perl-1.999022 and above (RC5 or greater
 of the CPAN distribution).
 
 %prep
-%setup -q -n %{real_name}-%{version} 
+%setup -q -n %{module}-%{version} 
 
 %build
-
-# this is to fool this stupid makefile...
-mkdir -p %{buildroot}%{_datadir}/perl-%{real_name}
-cp GeoIP.dat %{buildroot}%{_datadir}/perl-%{real_name}/
-
-%{__perl} Makefile.PL INSTALLDIRS=vendor <<EOF
-%{buildroot}%{_datadir}/perl-%{real_name}
-n
-y
-EOF
-
+%{__perl} Makefile.PL INSTALLDIRS=vendor </dev/null
 %make
 
+%check
 # requires network, and test suite rework
-#make test
+make test
 
 %install
 rm -rf %{buildroot}
 %makeinstall_std
-
-mkdir -p %{buildroot}%{_datadir}/perl-%{real_name}
-cp GeoIP.dat %{buildroot}%{_datadir}/perl-%{real_name}/
-
-# remove the hack here...
-find %{buildroot}%{perl_vendorlib} -type f -name "*.pm" | xargs perl -pi -e "s|%{buildroot}||g"
-
-# fix apache config...
-#install -d %{buildroot}%{_sysconfdir}/httpd/conf/webapps.d
-#
-#cat > %{buildroot}%{_sysconfdir}/httpd/conf/webapps.d/%{real_name}.conf << EOF
-#PerlModule Apache::HelloIP 
-#<Location /ip> 
-#    SetHandler perl-script 
-#    PerlHandler Apache::HelloIP 
-#    PerlSetVar GeoIPDBFile "%{_datadir}/GeoIP/GeoIP.dat" 
-#    PerlSetVar GeoIPFlag Standard 
-#</Location>
-#EOF
-
-#%%post
-#if [ -f %{_var}/lock/subsys/httpd ]; then
-#    %{_initrddir}/httpd restart 1>&2;
-#fi
-#
-#%%postun
-#if [ "$1" = "0" ]; then
-#    if [ -f %{_var}/lock/subsys/httpd ]; then
-#        %{_initrddir}/httpd restart 1>&2
-#    fi
-#fi
 
 %clean 
 rm -rf %{buildroot}
@@ -95,17 +54,5 @@ rm -rf %{buildroot}
 %files
 %defattr(-,root,root)
 %doc Changes README
-#%attr(0644,root,root) %config(noreplace) %{_sysconfdir}/httpd/conf/webapps.d/%{real_name}.conf
-%dir %{perl_vendorlib}/*/Apache2/Geo
-%dir %{perl_vendorlib}/*/Apache2/Geo/IP
-%{perl_vendorlib}/*/Apache2/GeoIP.pm
-%{perl_vendorlib}/*/Apache2/Geo/IP.pm
-%{perl_vendorlib}/*/Apache2/Geo/Mirror.pm
-%{perl_vendorlib}/*/Apache2/Geo/IP/Record.pm
-%{perl_vendorlib}/*/auto/Apache2/GeoIP/GeoIP.so
-%dir %{_datadir}/perl-%{real_name}
-%{_datadir}/perl-%{real_name}/GeoIP.dat
+%{perl_vendorlib}/Apache2
 %{_mandir}/*/*
-
-
-
