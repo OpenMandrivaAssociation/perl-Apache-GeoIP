@@ -1,20 +1,22 @@
-%define module Apache-GeoIP
+%define upstream_name    Apache-GeoIP
+%define upstream_version 1.99
+
+Name:       perl-%{upstream_name}
+Version:    %perl_convert_version %{upstream_version}
+Release:    %mkrel 1
 
 Summary:	Apache::Geo::IP - Look up country by IP Address
-Name:		perl-%{module}
-Version:	1.99
-Release:	%mkrel 1
-License:	GPL or Artistic
+License:	GPL+ or Artistic
 Group:		Development/Perl
-URL:		http://search.cpan.org/dist/%{module}
-Source:     http://www.cpan.org/modules/by-module/Apache/%{module}-%{version}.tar.gz
-BuildRequires:	perl-devel
+Url:		http://search.cpan.org/dist/%{upstream_name}
+Source0:    http://www.cpan.org/modules/by-module/Apache/%{upstream_name}-%{upstream_version}.tar.gz
+
 BuildRequires:	apache-devel
 BuildRequires:	apache-mod_perl
 BuildRequires:	apache-mod_perl-devel
 BuildRequires:	perl(Apache::Test) >= 1.25
 BuildRoot:	noarch
-BuildRoot:	%{_tmppath}/%{name}-%{version}
+BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}
 
 %description
 This module constitutes a mod_perl (both versions 1 and 2) interface 
@@ -34,7 +36,7 @@ will only work with mod_perl-1.999022 and above (RC5 or greater
 of the CPAN distribution).
 
 %prep
-%setup -q -n %{module}-%{version} 
+%setup -q -n %{upstream_name}-%{upstream_version}
 
 %build
 %{__perl} Makefile.PL INSTALLDIRS=vendor </dev/null
