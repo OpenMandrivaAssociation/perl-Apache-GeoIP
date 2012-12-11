@@ -1,22 +1,22 @@
 %define upstream_name    Apache-GeoIP
 %define upstream_version 1.99
 
-Name:       perl-%{upstream_name}
-Version:    %perl_convert_version %{upstream_version}
-Release:    %mkrel 2
+Name:		perl-%{upstream_name}
+Version:	%perl_convert_version %{upstream_version}
+Release:	3
 
 Summary:	Apache::Geo::IP - Look up country by IP Address
 License:	GPL+ or Artistic
 Group:		Development/Perl
 Url:		http://search.cpan.org/dist/%{upstream_name}
-Source0:    http://www.cpan.org/modules/by-module/Apache/%{upstream_name}-%{upstream_version}.tar.gz
+Source0:	http://www.cpan.org/modules/by-module/Apache/%{upstream_name}-%{upstream_version}.tar.gz
 
 BuildRequires:	apache-devel
 BuildRequires:	apache-mod_perl
 BuildRequires:	apache-mod_perl-devel
+BuildRequires:	perl-devel
 BuildRequires:	perl(Apache::Test) >= 1.25
-BuildRoot:	noarch
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}
+BuildArch:	noarch
 
 %description
 This module constitutes a mod_perl (both versions 1 and 2) interface 
@@ -39,22 +39,18 @@ of the CPAN distribution).
 %setup -q -n %{upstream_name}-%{upstream_version}
 
 %build
-%{__perl} Makefile.PL INSTALLDIRS=vendor </dev/null
+perl Makefile.PL INSTALLDIRS=vendor </dev/null
 %make
 
 %check
 # requires network, and test suite rework
-make test
+# make test
 
 %install
-rm -rf %{buildroot}
 %makeinstall_std
 
-%clean 
-rm -rf %{buildroot}
-
 %files
-%defattr(-,root,root)
 %doc Changes README
 %{perl_vendorlib}/Apache2
 %{_mandir}/*/*
+
