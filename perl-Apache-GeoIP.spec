@@ -2,14 +2,14 @@
 %define upstream_version 1.99
 
 Name:		perl-%{upstream_name}
-Version:	%perl_convert_version %{upstream_version}
-Release:	5
+Version:	%{upstream_version}
+Release:	6
 
 Summary:	Apache::Geo::IP - Look up country by IP Address
 License:	GPL+ or Artistic
 Group:		Development/Perl
-Url:		https://search.cpan.org/dist/%{upstream_name}
-Source0:	http://www.cpan.org/modules/by-module/Apache/%{upstream_name}-%{upstream_version}.tar.gz
+Url:		http://github.com/rkobes/apache-geoip/tree/master
+Source0:	https://cpan.metacpan.org/authors/id/R/RK/RKOBES/Apache-GeoIP-%{upstream_version}.tar.gz
 
 BuildRequires:	make
 BuildRequires:	apache-devel
