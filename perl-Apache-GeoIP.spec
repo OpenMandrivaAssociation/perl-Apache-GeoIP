@@ -1,15 +1,13 @@
 %define upstream_name    Apache-GeoIP
-%define upstream_version 1.99
-
 Name:		perl-%{upstream_name}
-Version:	%{upstream_version}
-Release:	6
+Version:	1.99
+Release:	7
 
 Summary:	Apache::Geo::IP - Look up country by IP Address
 License:	GPL+ or Artistic
 Group:		Development/Perl
 Url:		http://github.com/rkobes/apache-geoip/tree/master
-Source0:	https://cpan.metacpan.org/authors/id/R/RK/RKOBES/Apache-GeoIP-%{upstream_version}.tar.gz
+Source0:	https://cpan.metacpan.org/authors/id/R/RK/RKOBES/Apache-GeoIP-%{version}.tar.gz
 
 BuildRequires:	make
 BuildRequires:	apache-devel
@@ -37,7 +35,7 @@ will only work with mod_perl-1.999022 and above (RC5 or greater
 of the CPAN distribution).
 
 %prep
-%setup -q -n %{upstream_name}-%{upstream_version}
+%setup -q -n %{upstream_name}-%{version}
 
 %build
 perl Makefile.PL INSTALLDIRS=vendor </dev/null
