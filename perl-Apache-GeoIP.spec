@@ -2,7 +2,7 @@
 %define upstream_version 1.99
 Name:		perl-%{upstream_name}
 Version:	1.99
-Release:	3
+Release:	4
 
 Summary:	Apache::Geo::IP - Look up country by IP Address
 License:	GPL+ or Artistic
